@@ -1,36 +1,58 @@
-//Creating Divs
-
-function createDiv(){
+//Function to create divs for the grid
+function createDiv(num) {
     let x = 0;
-    let y = 255;
-    const container = document.querySelector('.container');
-    while(x <= y){
+    let y = (num * num) - 1;
+    const grid = document.querySelector('#grid');
+    while (x <= y) {
         const square = document.createElement("div");
-        square.id = 'square';
-        container.appendChild(square);
+        square.classList.add('square');
+        grid.appendChild(square);
         x++;
     }
 }
-createDiv();
+//creating initial grid 16x16
+//createDiv(16);
 
-const squares = document.querySelectorAll('#square');
+//function to change size of grid display to user input
 
-squares.forEach((square) => {
-    square.addEventListener("mouseenter", () =>{
-        square.style.backgroundColor = 'black';
-    });
-    
-    //square.addEventListener("mouseleave", () =>{
+function changeGrid() {
+    let num = prompt('How many columns do you want in your sketchpad? Enter a number 1-100');
+    //try to remove previous square divs. Not currently working//
+
+    createDiv(num);
+
+    //adding event listener to new divs
+
+    // document.querySelectorAll('.square').forEach(square => {
+    // square.addEventListener('mouseenter', event => {
+    //     square.style.backgroundColor = 'black';
+    // })
+    //  })
+
+}
+
+//Functions and Event Listener for squares/change colors
+document.querySelectorAll('.square').forEach(square => {
+square.addEventListener('mouseenter', event => {
+square.style.backgroundColor = 'black';
+ })
+})
+
+//new event listener - Not working
+//document.querySelector('container').addEventListener('mouseenter', () => {
+    //let sketchpad = document.getElementById('grid');
+   // if (sketchpad.classList.contains('square')) {
+     //   sketchpad.classList.add('black');
+    //}
+//})
+
+document.querySelector('button').addEventListener("click", () => {
+    document.querySelectorAll('.square').forEach(square => {
         //square.style.backgroundColor = 'white';
-   // })
-});
-
-
-
-//function colorChange {
-   // square.style.backgroundColor = 'black';
-//}
-
-//function colorRemove{
-  //  square.style.backgroundColor = 'white';
-//}
+        var cleanSlate = document.getElementsByClassName("square");
+        for(var i = 0; i < cleanSlate.length; i++) {
+        cleanSlate[i].parentNode.removeChild(cleanSlate[i]);
+        //square.remove()
+    }})
+    changeGrid();
+})
