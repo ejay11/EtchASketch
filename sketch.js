@@ -1,57 +1,38 @@
 //Function to create divs for the grid
-function createDiv(num) {
-    let x = 0;
+function createGrid(num) {
     let y = (num * num) - 1;
-    const grid = document.querySelector('#grid');
-    while (x <= y) {
+    let grid = document.querySelector('#grid');
+    for (let x = 0; x <= y; x++) {
         const square = document.createElement("div");
         square.classList.add('square');
         grid.appendChild(square);
-        x++;
     }
+    document.querySelectorAll('.square').forEach(square => {
+        square.addEventListener('mouseenter', event => {
+           square.classList.add('black');
+        })
+        })
 }
-//creating initial grid 16x16
-createDiv(16);
 
-//function to change size of grid display to user input
+//function deleteGrid
+
 
 function changeGrid() {
     let num = prompt('How many columns do you want in your sketchpad? Enter a number 1-100');
-
-    createDiv(num);
+    //put in validation
+    createGrid(num);
 
     //Changing style for responsive grid - was going to attemp to insert (num / 2) into row template, but even style without variable isn't working
-    document.querySelector("#grid").style.gridTemplateColumns = "repeat(4, 1fr);";
-    document.querySelector("#grid").style.gridTemplateRows = "repeat(4, 1fr);";
-     
-
-    //adding event listener to new divs
-
-    document.querySelectorAll('.square').forEach(square => {
-    square.addEventListener('mouseenter', event => {
-       square.classList.add('black');
-    })
-    })
-
+    let grid = document.querySelector("#grid");
+    let style = `repeat(${num}, 1fr`;
+    grid.setAttribute("style", `grid-template-columns: ${style}`);
+    grid.setAttribute("style", `grid-template-rows: ${style}`);
+    //document.querySelector("#grid").style.gridTemplateColumns = "repeat(4, 1fr);";
+    //document.querySelector("#grid").style.gridTemplateRows = "repeat(4, 1fr);";
 }
 
-//Functions and Event Listener for squares/change colors
-document.querySelectorAll('.square').forEach(square => {
-    square.addEventListener('mouseenter', event => {
-       square.classList.add('black');
-    })
-    })
 
-//new event listener - Not working
-//document.addEventListener('mouseenter', () => {
-    //let sketchpad = document.getElementByClass('div');
-    //if (sketchpad.classList.contains('square')) {
-        //sketchpad.classList.add('black');
-        //for(var i = 0; i < sketchpad.length; i++) {
-          //  sketchpad[i].classList.add('black');
-    //}
-//})
-
+// --- EXECUTE STUFF ---
 //Reset Button
 document.querySelector('button').addEventListener("click", () => {
     document.querySelectorAll('.square').forEach(square => {
@@ -61,3 +42,5 @@ document.querySelector('button').addEventListener("click", () => {
     }})
     changeGrid();
 })
+
+createGrid(16);
